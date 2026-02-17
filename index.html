@@ -21,12 +21,23 @@
             },
             animation: {
                 'float': 'float 6s ease-in-out infinite',
+                'gradient-x': 'gradient-x 15s ease infinite',
             },
             keyframes: {
                 float: {
                     '0%, 100%': { transform: 'translateY(0)' },
                     '50%': { transform: 'translateY(-10px)' },
-                }
+                },
+                'gradient-x': {
+                    '0%, 100%': {
+                        'background-size': '200% 200%',
+                        'background-position': 'left center'
+                    },
+                    '50%': {
+                        'background-size': '200% 200%',
+                        'background-position': 'right center'
+                    },
+                },
             }
           }
         }
@@ -53,26 +64,109 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      /* FAJMULS THEME BACKGROUND */
-      .fajmuls-bg {
-        background: radial-gradient(circle at 0% 0%, #e0f7fa 0%, #ffffff 50%, #e1f5fe 100%);
-        position: relative;
+      /* BACKGROUND ANIMATIONS */
+      .bg-anim-wrapper {
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          z-index: -10;
+          overflow: hidden;
+          transition: background 0.5s ease;
       }
-      .fajmuls-bg::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
+
+      /* 1. FAJMULS (Party/Gradient) - Orange, Pink, Cyan */
+      .bg-fajmuls {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient-x 15s ease infinite;
+      }
+      .dark .bg-fajmuls {
+        background: linear-gradient(-45deg, #4c1d95, #be185d, #0f766e, #1e3a8a);
+        background-size: 400% 400%;
+      }
+
+      /* 2. GRID (Technical) - Blue/Gray Grid */
+      .bg-grid {
+        background-color: #f8fafc;
         background-image: 
-            radial-gradient(at 10% 10%, rgba(147, 197, 253, 0.4) 0px, transparent 50%),
-            radial-gradient(at 90% 0%, rgba(167, 243, 208, 0.4) 0px, transparent 50%),
-            radial-gradient(at 50% 50%, rgba(224, 242, 254, 0.3) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(253, 230, 138, 0.3) 0px, transparent 50%);
-        pointer-events: none;
+          linear-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: panGrid 60s linear infinite;
       }
-      .fajmuls-overlay {
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-          opacity: 0.4;
+      .dark .bg-grid {
+        background-color: #0f172a;
+        background-image: 
+          linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
       }
+      @keyframes panGrid {
+        0% { background-position: 0 0; }
+        100% { background-position: 50px 50px; }
+      }
+
+      /* 3. DOTS (Playful) - Pink/Rose Dots */
+      .bg-dots {
+        background-color: #fff1f2; /* Rose-50 */
+        background-image: radial-gradient(#fb7185 2px, transparent 2px);
+        background-size: 30px 30px;
+        animation: moveDots 20s linear infinite alternate;
+      }
+      .dark .bg-dots {
+        background-color: #020617;
+        background-image: radial-gradient(#334155 2px, transparent 2px);
+      }
+      @keyframes moveDots {
+          from { background-position: 0 0; }
+          to { background-position: 15px 15px; }
+      }
+
+      /* 4. WAVES (Calm) - Blue/Cyan Water */
+      .bg-waves {
+          background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+      }
+      .dark .bg-waves { background: linear-gradient(180deg, #0f172a 0%, #172554 100%); }
+      .bg-waves::after {
+          content: "";
+          position: absolute;
+          width: 200%; height: 200%;
+          top: -50%; left: -50%;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%230ea5e9' fill-opacity='0.1' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+          background-repeat: repeat-x;
+          opacity: 0.6;
+          animation: waveMove 30s linear infinite;
+      }
+      @keyframes waveMove {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+
+      /* 5. AURORA (Mystical) - Deep Purple/Green/Pink */
+      .bg-aurora {
+          background-color: #0f172a;
+          overflow: hidden;
+      }
+      .bg-aurora::before {
+          content: "";
+          position: absolute;
+          top: -50%; left: -50%;
+          width: 200%; height: 200%;
+          background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.3), transparent 60%),
+                      radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.2), transparent 50%),
+                      radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.2), transparent 50%);
+          filter: blur(80px);
+          animation: auroraShift 15s ease-in-out infinite alternate;
+      }
+      @keyframes auroraShift {
+          from { transform: scale(1) translate(0, 0); }
+          to { transform: scale(1.2) translate(-20px, 20px); }
+      }
+
+      /* FONT SIZE CLASSES */
+      .fs-sm { font-size: 0.875rem; line-height: 1.25rem; }
+      .fs-md { font-size: 1rem; line-height: 1.5rem; }
+      .fs-lg { font-size: 1.125rem; line-height: 1.75rem; }
+      .fs-xl { font-size: 1.25rem; line-height: 1.75rem; }
+
     </style>
 
 <link rel="stylesheet" href="/index.css">
@@ -91,7 +185,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/FajmulsLearning/assets/index-B_jWqhJI.js"></script>
+  <script type="module" crossorigin src="/FajmulsLearning/assets/index-D1iUoDrq.js"></script>
 </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
     <div id="root"></div>
