@@ -160,9 +160,46 @@
       .fs-lg { font-size: 1.125rem; line-height: 1.75rem; }
       .fs-xl { font-size: 1.25rem; line-height: 1.75rem; }
 
+      /* CUSTOM ANIMATIONS (Moved from index.css) */
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes sparkle {
+        0% { transform: scale(0) rotate(0deg); opacity: 0; }
+        50% { transform: scale(1) rotate(180deg); opacity: 1; }
+        100% { transform: scale(0) rotate(360deg); opacity: 0; }
+      }
+      
+      .animate-sparkle {
+        animation: sparkle 1.5s linear infinite;
+      }
+
+      @keyframes pulse-slow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: .5; }
+      }
+
+      .animate-pulse-slow {
+        animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      /* Magic Card Hover Effect */
+      .magic-card-hover {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      .magic-card-hover:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
     </style>
 
-<link rel="stylesheet" href="/index.css">
   <script type="importmap">
 {
   "imports": {
@@ -178,7 +215,8 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/FajmulsLearning/assets/index-3Lqjldos.js"></script>
+  <script type="module" crossorigin src="/FajmulsLearning/assets/index-DtY3CaYg.js"></script>
+  <link rel="stylesheet" crossorigin href="/FajmulsLearning/assets/index-BL6MRaUd.css">
 </head>
   <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
     <div id="root"></div>
